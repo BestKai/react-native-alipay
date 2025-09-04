@@ -1,5 +1,6 @@
 package com.uiwjs.alipay;
 
+import com.alipay.sdk.app.AlipayApi;
 import com.alipay.sdk.app.AuthTask;
 import com.alipay.sdk.app.PayTask;
 import com.alipay.sdk.app.EnvUtils;
@@ -46,6 +47,11 @@ public class RNAlipayModule extends ReactContextBaseJavaModule {
         };
         Thread thread = new Thread(runnable);
         thread.start();
+    }
+
+    @ReactMethod
+    public void registerApp(String appID, String universalLink) {
+        AlipayApi.registerApp(this.reactContext,appID);
     }
 
     @ReactMethod

@@ -86,6 +86,10 @@ RCT_EXPORT_METHOD(setAlipayScheme:(NSString *)scheme) {
     alipayScheme = scheme;
 }
 
+RCT_EXPORT_METHOD(registerApp:(NSString *)appID universalLink:(NSString *)universalLink) {
+    [AlipaySDK.defaultService registerApp:appID universalLink:universalLink];
+}
+
 RCT_EXPORT_METHOD(alipay:(NSString *)info resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     self.payOrderResolve = resolve;
     [AlipaySDK.defaultService payOrder:info fromScheme: alipayScheme callback:^(NSDictionary *resultDic) {
