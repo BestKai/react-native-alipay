@@ -21,7 +21,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/uiwjs/react-native-alipay.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
-  s.dependency = "AlipaySDK-iOS","~> 15.8.30"
 
   # s.source_files = "**/*.{h,m}"
   s.requires_arc = true
@@ -36,6 +35,8 @@ Pod::Spec.new do |s|
   s.frameworks = "CoreTelephony",
   s.frameworks = "CoreText",
   s.frameworks = "WebKit"
+
+  s.dependency "AlipaySDK-iOS","~> 15.8.30"
 
   # s.dependency "React"
   s.dependency "React-Core"
