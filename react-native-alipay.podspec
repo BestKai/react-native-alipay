@@ -36,8 +36,6 @@ Pod::Spec.new do |s|
   s.frameworks = "CoreText",
   s.frameworks = "WebKit"
 
-  s.dependency "AlipaySDK-iOS","~> 15.8.30"
-
   # s.dependency "React"
   s.dependency "React-Core"
   s.resource = 'ios/AlipaySDK.bundle'
