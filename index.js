@@ -1,4 +1,4 @@
-import { NativeModules, Platform } from "react-native";
+import { NativeModules, Platform, TurboModuleRegistry } from "react-native";
 
 const LINKING_ERROR =
   `The package '@uiw/react-native-alipay' doesn't seem to be linked. Make sure: \n\n` +
@@ -6,17 +6,13 @@ const LINKING_ERROR =
   "- You rebuilt the app after installing the package\n" +
   "- You are not using Expo managed workflow\n";
 
-console.log(":::NativeModules:::", NativeModules.RNAlipay);
-const RNAlipay = NativeModules.RNAlipay
-  ? NativeModules.RNAlipay
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
+let RNAlipay = TurboModuleRegistry.get("AlipayNativeModule");
+if (!RNAlipay) {
+  RNAlipay = NativeModules.RNAlipay;
+}
+if (RNAlipay) {
+  throw new Error(LINKING_ERROR);
+}
 // console.log('>RNAlipay1111>',  RNAlipay.setAlipayScheme)
 
 // console.log('>>NativeModules.RNAlipay:', NativeModules.RNAlipay)
@@ -28,7 +24,7 @@ export default class Alipay {
    * @returns result 支付宝回调结果 https://docs.open.alipay.com/204/105301
    */
   static alipay(orderInfo) {
-    return NativeModules.RNAlipay.alipay(orderInfo);
+    return RNAlipay.alipay(orderInfo);
   }
 
   /**
@@ -37,7 +33,7 @@ export default class Alipay {
    * @returns result 支付宝回调结果 详情见 https://opendocs.alipay.com/open/218/105325
    */
   static authInfo(authInfoStr) {
-    return NativeModules.RNAlipay.authInfo(authInfoStr);
+    return RNAlipay.authInfo(authInfoStr);
   }
 
   /**
@@ -45,7 +41,7 @@ export default class Alipay {
    *  @return 当前版本字符串
    */
   static getVersion() {
-    return NativeModules.RNAlipay.getVersion();
+    return RNAlipay.getVersion();
   }
 
   /**
@@ -55,7 +51,7 @@ export default class Alipay {
    */
   static setAlipayScheme(scheme) {
     if (Platform.OS === "ios") {
-      NativeModules.RNAlipay.setAlipayScheme(scheme);
+      RNAlipay.setAlipayScheme(scheme);
     }
   }
 
@@ -66,7 +62,7 @@ export default class Alipay {
    */
   static setAlipaySandbox(isSandBox) {
     if (Platform.OS === "android") {
-      NativeModules.RNAlipay.setAlipaySandbox(isSandBox);
+      RNAlipay.setAlipaySandbox(isSandBox);
     }
   }
   /**
@@ -75,6 +71,6 @@ export default class Alipay {
    * @param {*} universalLink android 不需要设置
    */
   static registerApp(appID, universalLink) {
-    NativeModules.RNAlipay.registerApp(appID, universalLink);
+    RNAlipay.registerApp(appID, universalLink);
   }
 }
