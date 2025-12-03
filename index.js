@@ -10,7 +10,7 @@ let RNAlipay = TurboModuleRegistry.get("AlipayNativeModule");
 if (!RNAlipay) {
   RNAlipay = NativeModules.RNAlipay;
 }
-if (RNAlipay) {
+if (!RNAlipay) {
   throw new Error(LINKING_ERROR);
 }
 // console.log('>RNAlipay1111>',  RNAlipay.setAlipayScheme)
