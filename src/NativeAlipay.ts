@@ -2,7 +2,7 @@ import type { TurboModule } from "react-native/Libraries/TurboModule/RCTExport";
 import { TurboModuleRegistry } from "react-native";
 
 export interface Spec extends TurboModule {
-  registerApp(appID: string, universalLink: string);
+  registerApp(appID: string, universalLink: string): void;
   getVersion(): Promise<string>;
   alipay(orderInfo: string): Promise<string>;
   setAlipayScheme(sScheme: string): void;
